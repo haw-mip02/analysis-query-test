@@ -34,6 +34,7 @@ import 'react-bootstrap-daterangepicker/css/daterangepicker.css';
 // Constants
 const INITIAL_CENTER = { lat: 53.6798865, lng: 9.3726795 };
 const INITIAL_ZOOM = 8;
+const MAX_POPULAR_WORDS = 5;
 const REST_URL = "http://hqor.de:16500/analysis/v1.0/"
 
 
@@ -42,45 +43,63 @@ function getPixelPositionOffset(width, height) {
   return { x: -(width / 2), y: -(height / 2) };
 }
 
+function getClusterData(lat, lng, radius, t0, t1, callback) {
+    var url = REST_URL + "search/" + lat + "/" + lng + "/" + radius + "/" + t0 + "/" + t1;
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() { 
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            callback(JSON.parse(xmlHttp.responseText));
+    }
+    xmlHttp.open("GET", url, true); 
+    xmlHttp.send(null);
+}
+
 // Map Component
-const MapView = withGoogleMap(props => (
+const MapView = withGoogleMap(props => {
+    let overlays = (props.clusters.length > 0) ? 
+        props.clusters.map((cluster, index) => (
+        // <OverlayView
+        //  key={index}
+        //  position={cluster.center}
+        //  mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+        //  getPixelPositionOffset={getPixelPositionOffset}>
+        //     <ul>
+        //         {cluster.words.map((word, index) => (
+        //             <li key={index}>{cluster.words[0]}</li>    
+        //         ))}
+        //     </ul>
+        // </OverlayView>
+        <InfoWindow
+         key={index}
+         defaultPosition={cluster.center}>
+            <ul>
+                {(function() {
+                    let sortable = Object.keys(cluster.words).map(key => { return [key, cluster.words[key]] });
+                    sortable.sort((a, b) => { return a[1] - b[1] });
+                    return sortable.slice(Math.max(sortable.length - MAX_POPULAR_WORDS, 0)).map(tuple => (
+                        <li key={tuple[0]}>{tuple[0]}: {tuple[1]}</li>
+                    ));
+                })()}
+            </ul>
+        </InfoWindow>
+    )) : null;
+    return (
     <GoogleMap
      ref={props.onMapLoad}
      center={props.center}
      zoom={props.zoom}
      onCenterChanged={props.onCenterChanged}
      onZoomChanged={props.onZoomChanged}>
-        {props.clusters.map((cluster, index) => (
-            // <OverlayView
-            //  key={index}
-            //  position={cluster.center}
-            //  mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
-            //  getPixelPositionOffset={getPixelPositionOffset}>
-            //     <ul>
-            //         {cluster.words.map((word, index) => (
-            //             <li key={index}>{cluster.words[0]}</li>    
-            //         ))}
-            //     </ul>
-            // </OverlayView>
-            <InfoWindow
-             key={index}
-             defaultPosition={cluster.center}>
-                <ul>
-                    {cluster.words.map((word, index) => (
-                        <li key={index}>{cluster.words[0]}</li>    
-                    ))}
-                </ul>
-            </InfoWindow>
-        ))}
-    </GoogleMap>
-));
+        {overlays}
+    </GoogleMap>)
+});
 
 // Main Component
 export default class App extends Component {
     state = {
         center: INITIAL_CENTER,
         zoom: INITIAL_ZOOM,
-        clusters: [{ words: ["test"], center: INITIAL_CENTER }],
+        clusters: [],
         ranges: {
             'Today': [moment(), moment()],
             'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
@@ -113,7 +132,15 @@ export default class App extends Component {
         const state = this.state;
         let t0 = state.startDate.utc().unix();
         let t1 = state.endDate.utc().unix();
-        console.log(lat, lng, radius, t0, t1);
+        getClusterData(lat, lng, radius, t0, t1, (function(data) {
+            data.clusters.forEach(cluster => {
+                let center = cluster.center;
+                cluster.center = { lat: center[1], lng: center[0] };
+            });
+            this.setState({
+                clusters: data.clusters,
+            });
+        }).bind(this));
     }
 
     handleCenterChanged() { // center handled explicitly to allow later manipulation
@@ -158,7 +185,7 @@ export default class App extends Component {
         }
         return (
             <div style={{ height: `100%`, width: `100%` }}>
-                <PageHeader>Analysis Query Testing UI <small>v0.0.1</small></PageHeader>
+                <PageHeader><center>Analysis Query Testing UI <small>v0.0.1</small></center></PageHeader>
                 <Grid>
                     <Row style={{ paddingBottom: `1em` }}>
                         <Col xs={6} md={4}>
