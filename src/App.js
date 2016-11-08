@@ -35,8 +35,8 @@ import 'react-bootstrap-daterangepicker/css/daterangepicker.css';
 const INITIAL_CENTER = { lat: 53.6798865, lng: 9.3726795 };
 const INITIAL_ZOOM = 8;
 const MAX_POPULAR_WORDS = 5;
-const REST_URL = "http://hqor.de:16500/analysis/v1.0/"
-
+//const REST_URL = "http://hqor.de:16500/analysis/v1.0/"
+const REST_URL = "http://localhost:5000/analysis/v1.0/"
 
 // Helper
 function getPixelPositionOffset(width, height) {
@@ -73,13 +73,9 @@ const MapView = withGoogleMap(props => {
          key={index}
          defaultPosition={cluster.center}>
             <ul>
-                {(function() {
-                    let sortable = Object.keys(cluster.words).map(key => { return [key, cluster.words[key]] });
-                    sortable.sort((a, b) => { return a[1] - b[1] });
-                    return sortable.slice(Math.max(sortable.length - MAX_POPULAR_WORDS, 0)).map(tuple => (
-                        <li key={tuple[0]}>{tuple[0]}: {tuple[1]}</li>
-                    ));
-                })()}
+                {cluster.words.map(tuple => (
+                    <li key={tuple[0]}>{tuple[0]}: {tuple[1]}</li>)
+                )}
             </ul>
         </InfoWindow>
     )) : null;
@@ -133,9 +129,13 @@ export default class App extends Component {
         let t0 = state.startDate.utc().unix();
         let t1 = state.endDate.utc().unix();
         getClusterData(lat, lng, radius, t0, t1, (function(data) {
+            console.log('Raw Cluster Data', data);
             data.clusters.forEach(cluster => {
                 let center = cluster.center;
                 cluster.center = { lat: center[1], lng: center[0] };
+                let sortable = Object.keys(cluster.words).map(key => { return [key, cluster.words[key]] });
+                sortable.sort((a, b) => { return a[1] - b[1] });
+                cluster.words = sortable.slice(Math.max(sortable.length - MAX_POPULAR_WORDS, 0))
             });
             this.setState({
                 clusters: data.clusters,
