@@ -35,8 +35,7 @@ import 'react-bootstrap-daterangepicker/css/daterangepicker.css';
 const INITIAL_CENTER = { lat: 53.6798865, lng: 9.3726795 };
 const INITIAL_ZOOM = 8;
 const MAX_POPULAR_WORDS = 5;
-//const REST_URL = "http://hqor.de:16500/analysis/v1.0/"
-const REST_URL = "http://localhost:5000/analysis/v1.0/"
+const REST_URL = "http://hqor.de:16500/analysis/v1.0/"
 
 // Helper
 function getPixelPositionOffset(width, height) {
