@@ -10,6 +10,7 @@ import {
 
 import Map from '../containers/Map'
 import SearchRow from '../containers/SearchRow'
+import SidePanel from '../containers/SidePanel'
 
 // Main Component
 export default class App extends Component {
@@ -28,9 +29,7 @@ export default class App extends Component {
                             </Panel>
                         </Col>
                         <Col xs={6} md={4}>
-                            <Panel>
-                                Test
-                            </Panel>
+                            <SidePanel />
                         </Col>
                      </Row>
                  </Grid>

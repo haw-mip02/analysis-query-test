@@ -1,16 +1,18 @@
 import { default as React, PropTypes } from 'react'
 
 import {
-  withGoogleMap,
-  GoogleMap,
-  OverlayView,
-  InfoWindow,
+    withGoogleMap,
+    GoogleMap,
+    OverlayView,
+    InfoWindow,
 } from 'react-google-maps';
+
+import Link from './Link'
 
 
 
 const getPixelPositionOffset = (width, height) => {
-  return { x: -(width / 2), y: -(height / 2) };
+    return { x: -(width / 2), y: -(height / 2) };
 }
 
 const MapView = withGoogleMap(props => {
@@ -31,8 +33,10 @@ const MapView = withGoogleMap(props => {
          key={index}
          defaultPosition={cluster.center}>
             <ul>
-                {cluster.words.map(tuple => (
-                    <li key={tuple[0]}>{tuple[0]}: {tuple[1]}</li>)
+                {cluster.mostPopular.map(tuple => (
+                    <li key={tuple[0]}>
+                        <Link active={false} onClick={() => props.onWordSelection(cluster, tuple[0])}>{tuple[0]}</Link>
+                    </li>)
                 )}
             </ul>
         </InfoWindow>
@@ -50,11 +54,12 @@ const MapView = withGoogleMap(props => {
 
 MapView.propTypes = {
     ref: PropTypes.func,
+    clusters: PropTypes.array.isRequired,
     center: PropTypes.object.isRequired,
     zoom: PropTypes.number.isRequired,
-    onCenterChanged: PropTypes.func,
-    onZoomChanged: PropTypes.func,
-    clusters: PropTypes.array.isRequired
+    onCenterChanged: PropTypes.func.isRequired,
+    onZoomChanged: PropTypes.func.isRequired,
+    onWordSelection: PropTypes.func.isRequired,
 }
 
 export default MapView

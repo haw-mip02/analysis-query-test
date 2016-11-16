@@ -3,9 +3,9 @@ import {
 	DATE_RANGE_EVENT, 
 	RECEIVE_CLUSTERS,
 	MAP_LOADED,
-	MAP_OVERLAY_SELECTION,
 	MAP_ZOOM_CHANGED,
 	MAP_CENTER_CHANGED,
+    WORD_SELECTION,
 } from './actions'
 import { INITIAL_CENTER, INITIAL_ZOOM } from './constants'
 
@@ -27,6 +27,10 @@ const initialState = {
 	    startDate: moment().subtract(29, 'days'),
 	    endDate: moment(),
 	},
+    selection: {
+        cluster: undefined,
+        word: undefined,
+    },
     clusters: [],
 }
 
@@ -39,15 +43,13 @@ export default function reducers(state = initialState, action) {
         			endDate: action.endDate,
         		})
       		})
-      	case MAP_OVERLAY_SELECTION:
-      		return Object.assign({}, state, {})
       	case MAP_ZOOM_CHANGED:
     		const node = state.map.node;
     		const nextZoom = node.getZoom();
     		if (nextZoom !== state.map.zoom) { // TODO: in general check how assigns of sub-objects are handled in redux (idiomatic way?)
     			return Object.assign({}, state, { map: Object.assign({}, state.map, {
     				zoom: nextZoom,
-    			})})
+    			}) })
     		}
     		return state
     	case MAP_CENTER_CHANGED:
@@ -58,7 +60,7 @@ export default function reducers(state = initialState, action) {
         	}
         	return Object.assign({}, state, { map: Object.assign({}, state.map, {
         		center: nextCenter,
-        	})})
+        	}) })
         case RECEIVE_CLUSTERS:
         	return Object.assign({}, state, {
         		clusters: action.clusters,
@@ -67,6 +69,11 @@ export default function reducers(state = initialState, action) {
         	return Object.assign({}, state, { map: Object.assign({}, state.map, {
         		node: action.node,
         	}) })
+        case WORD_SELECTION:
+            return Object.assign({}, state, { selection: Object.assign({}, state.selection, {
+                cluster: action.cluster,
+                word: action.word,
+            }) })
     	default:
     	  	return state
   	}

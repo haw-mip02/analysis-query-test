@@ -27,13 +27,6 @@ export function handleDateRangeEvent(startDate, endDate) {
 	}
 }
 
-export const MAP_OVERLAY_SELECTION = 'MAP_OVERLAY_SELECTION'
-export function handleMapOverlaySelection() {
-	return {
-		type: MAP_OVERLAY_SELECTION,
-	}
-}
-
 export const MAP_ZOOM_CHANGED = 'MAP_ZOOM_CHANGED'
 export function handleMapZoomChanged() {
 	return {
@@ -70,9 +63,18 @@ export function handleSearchRequest() {
 				    cluster.center = { lat: center[1], lng: center[0] };
 				    let sortable = Object.keys(cluster.words).map(key => { return [key, cluster.words[key]] });
 				    sortable.sort((a, b) => { return a[1] - b[1] });
-				    cluster.words = sortable.slice(Math.max(sortable.length - MAX_POPULAR_WORDS, 0))
+				    cluster.mostPopular = sortable.slice(Math.max(sortable.length - MAX_POPULAR_WORDS, 0))
 				});
         		dispatch(receiveClusters(json.clusters))
         	}).catch(err => console.log(err.toString()))
   	} 
+}
+
+export const WORD_SELECTION = 'WORD_SELECTION'
+export function handleWordSelection(cluster, word) {
+    return {
+        type: WORD_SELECTION,
+        cluster: cluster,
+        word: word,
+    }
 }
