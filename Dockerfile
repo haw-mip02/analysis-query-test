@@ -7,6 +7,7 @@ ADD ./run.sh /opt/frontend/run.sh
 
 WORKDIR /opt/frontend
 
+RUN apt-get update && apt-get install -y gettext-base
 RUN npm install
 RUN npm install -g pushstate-server
 
