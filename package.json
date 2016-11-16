@@ -6,12 +6,17 @@
     "react-scripts": "0.7.0"
   },
   "dependencies": {
+    "install": "^0.8.2",
+    "isomorphic-fetch": "^2.2.1",
     "moment": "^2.15.2",
     "react": "^15.3.2",
     "react-bootstrap": "^0.30.6",
     "react-bootstrap-daterangepicker": "^3.2.2",
     "react-dom": "^15.3.2",
-    "react-google-maps": "^6.0.1"
+    "react-google-maps": "^6.0.1",
+    "react-redux": "^4.4.6",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
