@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import SidePanelView from '../components/SidePanelView'
+import { handleWordSelection } from '../actions'
 
 
 const mapStateToProps = (state) => {
@@ -10,7 +11,11 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return {}
+    return {
+        onWordSelection: (cluster, word) => {
+            dispatch(handleWordSelection(cluster, word))
+        },
+    }
 }
 
 const SidePanel = connect(
