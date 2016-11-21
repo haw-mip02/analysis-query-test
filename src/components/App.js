@@ -10,6 +10,7 @@ import {
 
 import Map from '../containers/Map'
 import SearchRow from '../containers/SearchRow'
+import DetailPanel from '../containers/DetailPanel'
 import SidePanel from '../containers/SidePanel'
 
 // Main Component
@@ -29,14 +30,12 @@ export default class App extends Component {
                             </Panel>
                         </Col>
                         <Col xs={6} md={4}>
-                            <Panel header="Cluster Statistics" bsStyle="info">
-                                TODO: some stats about query and cluster
-                            </Panel>
+                            <SidePanel />
                         </Col>
                     </Row>
                     <Row>
                         <Col xs={12} md={8}>
-                            <SidePanel />
+                            <DetailPanel />
                         </Col>
                     </Row>
                  </Grid>
