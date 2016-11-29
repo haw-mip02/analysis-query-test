@@ -5,6 +5,7 @@ import {
     handleWordSelection,
     handleMapZoomChanged,
     handleMapCenterChanged,
+    handleSearchRequest,
 } from '../actions'
 
 
@@ -29,6 +30,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         onZoomChanged: () => {
             dispatch(handleMapZoomChanged())
+        },
+        onIdle: () => {
+            dispatch(handleSearchRequest())
         },
     }
 }

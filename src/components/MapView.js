@@ -16,30 +16,18 @@ const getPixelPositionOffset = (width, height) => {
 }
 
 const MapView = withGoogleMap(props => {
-    let overlays = (props.clusters.length > 0) ? 
+    let overlays = (props.clusters.length > 0) ?
         props.clusters.map((cluster, index) => (
-        // <OverlayView
-        //  key={index}
-        //  position={cluster.center}
-        //  mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
-        //  getPixelPositionOffset={getPixelPositionOffset}>
-        //     <ul>
-        //         {cluster.words.map((word, index) => (
-        //             <li key={index}>{cluster.words[0]}</li>    
-        //         ))}
-        //     </ul>
-        // </OverlayView>
-        <InfoWindow
+        <OverlayView
          key={index}
-         defaultPosition={cluster.center}>
-            <ul>
-                {cluster.mostPopular.map(tuple => (
-                    <li key={tuple[0]}>
-                        <Link active={false} onClick={() => props.onWordSelection(cluster, tuple[0])}>{tuple[0]}</Link>
-                    </li>)
-                )}
-            </ul>
-        </InfoWindow>
+         position={cluster.center}
+         mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+         getPixelPositionOffset={getPixelPositionOffset}>
+            <div className="marker" onClick={() => props.onWordSelection(cluster, cluster.mostPopular[0][0])}>
+                <div className="circle"></div>
+                <div>{cluster.mostPopular[0][0]}</div>
+            </div>
+        </OverlayView>
     )) : null;
     return (
     <GoogleMap
@@ -47,6 +35,7 @@ const MapView = withGoogleMap(props => {
      center={props.center}
      zoom={props.zoom}
      onCenterChanged={props.onCenterChanged}
+     onIdle={props.onIdle}
      onZoomChanged={props.onZoomChanged}>
         {overlays}
     </GoogleMap>)
@@ -60,6 +49,7 @@ MapView.propTypes = {
     onCenterChanged: PropTypes.func.isRequired,
     onZoomChanged: PropTypes.func.isRequired,
     onWordSelection: PropTypes.func.isRequired,
+    onIdle: PropTypes.func.isRequired,
 }
 
 export default MapView

@@ -10,15 +10,15 @@ import '../../node_modules/react-bubble-chart/src/style.css';
 
 
 const colorLegend = [
-    {color: "#67000d", text: 'Negative', textColor: "#ffffff"}, 
-    "#a50f15", "#cb181d", "#ef3b2c", "#fb6a4a", "#fc9272", "#fcbba1", "#fee0d2",
-    {color: "#f0f0f0", text: 'Neutral'},
-    "#deebf7", "#c6dbef", "#9ecae1", "#6baed6", "#4292c6", "#2171b5", "#08519c", 
-    {color: "#08306b", text: 'Positive', textColor: "#ffffff"},
+    {color: "#f6778b", text: 'Negative', textColor: "#ffffff"},
+    "#f2778c", "#e87b91", "#de7d97", "#d2809d", "#c683a5", "#bb86ac", "#ae89b3",
+    {color: "#a28cba", text: ''},
+    "#968fc1", "#8993c8", "#7d96cf", "#7298d5", "#649cdc", "#579ee3", "#4ba3ea",
+    {color: "#3ea5f1", text: 'Positive', textColor: "#ffffff"},
 ];
 
 const tooltipProps = [
-    { css: 'symbol', prop: '_id' }, 
+    { css: 'symbol', prop: '_id' },
     { css: 'value',  prop: 'value', display: 'Last Value' },
     { css: 'change', prop: 'colorValue', display: 'Change' }
 ];

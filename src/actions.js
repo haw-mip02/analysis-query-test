@@ -66,8 +66,8 @@ export function handleSearchRequest() {
 				    cluster.mostPopular = sortable.slice(Math.max(sortable.length - MAX_POPULAR_WORDS, 0))
 				});
         		dispatch(receiveClusters(json.clusters))
-        	}).catch(err => console.log(err.toString()))
-  	} 
+        	}).catch(err => console.log(err))
+  	}
 }
 
 export const WORD_SELECTION = 'WORD_SELECTION'

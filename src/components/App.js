@@ -12,6 +12,8 @@ import Map from '../containers/Map'
 import SearchRow from '../containers/SearchRow'
 import DetailPanel from '../containers/DetailPanel'
 import SidePanel from '../containers/SidePanel'
+import Pie from '../containers/Pie'
+import Tweets from '../containers/Tweets'
 
 // Main Component
 export default class App extends Component {
@@ -22,20 +24,21 @@ export default class App extends Component {
                 <Grid>
                     <SearchRow />
                     <Row>
-                        <Col xs={12} md={8}>
+                        <Col xs={12} md={12}>
                             <Panel>
                                 <Map
                                  containerElement={<div style={{ height: `500px`, width: `100%` }} />}
                                  mapElement={<div style={{ height: `100%` }} />} />
                             </Panel>
                         </Col>
-                        <Col xs={6} md={4}>
-                            <SidePanel />
-                        </Col>
                     </Row>
                     <Row>
                         <Col xs={12} md={8}>
                             <DetailPanel />
+                        </Col>
+                        <Col xs={12} md={4}>
+                            <Pie />
+                            <Tweets />
                         </Col>
                     </Row>
                  </Grid>
