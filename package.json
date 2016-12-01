@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "d3": "^3.5.17",
+    "finalhandler": "^0.5.1",
     "install": "^0.8.2",
     "isomorphic-fetch": "^2.2.1",
     "moment": "^2.15.2",
@@ -19,7 +20,8 @@
     "react-pie": "0.0.3",
     "react-redux": "^4.4.6",
     "redux": "^3.6.0",
-    "redux-thunk": "^2.1.0"
+    "redux-thunk": "^2.1.0",
+    "serve-static": "^1.11.1"
   },
   "scripts": {
     "start": "react-scripts start",

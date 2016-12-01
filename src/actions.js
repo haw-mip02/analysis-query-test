@@ -53,7 +53,7 @@ export function handleSearchRequest() {
         const search = state.search
         let t0 = search.startDate.utc().unix();
         let t1 = search.endDate.utc().unix();
-        return fetch(`${REST_URL}search/${lat}/${lng}/${radius}/${t0}/${t1}`)
+        return fetch(`/analysis/search/${lat}/${lng}/${radius}/${t0}/${t1}`)
         	.then(response => response.json())
         	.then(json => {
         		console.log('Raw Cluster Data', json);
