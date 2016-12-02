@@ -1,14 +1,26 @@
 import { default as React, PropTypes } from 'react'
 
-// import Pie from 'react-pie'
+import { Chart } from 'react-google-charts'
 
-const colorRange = ['#f5778a', '#ffa05f', '#7d91b4', '#a37fda', '#3da5f1', '#7fc344', '#e7b730'];
+const colors = ['#f5778a', '#ffa05f', '#7d91b4', '#a37fda', '#3da5f1', '#7fc344', '#e7b730'];
 
-const PieView = ({ clusters }) => {
-    if (!clusters || clusters.length === 0)
-        return null
+const PieView = ({ selectedCluster, selectedWord }) => {
+    if (!selectedWord) return null
+    let words = Object.keys(selectedCluster.words).map(word => [word, selectedCluster.words[word]])
+    words.sort((a, b) => b[1] - a[1])
+    words.unshift(['Word', 'Mentions'])
     return (
-        null
+        <Chart
+          chartType='PieChart'
+          options={{
+              legend: 'none',
+              pieSliceText: 'label',
+              colors: colors,
+              chartArea: {width: '80%', height: '80%'}
+          }}
+          width='100%'
+          data={words.slice(0, colors.length + 1)}
+        />
     )
 }
 

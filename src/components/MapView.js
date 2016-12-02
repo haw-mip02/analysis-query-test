@@ -4,10 +4,7 @@ import {
     withGoogleMap,
     GoogleMap,
     OverlayView,
-    InfoWindow,
 } from 'react-google-maps';
-
-import Link from './Link'
 
 
 

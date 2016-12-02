@@ -24,20 +24,20 @@ const SearchRow = ({ startDate, endDate, ranges, onDateRangeEvent, onSearchClick
     }
     return (
         <Row style={{ paddingBottom: `1em` }}>
-            <Col xs={4} md={2}>
+            <Col xs={6} md={4}>
                 <DateRangePicker startDate={startDate} endDate={endDate} ranges={ranges} onEvent={(e, picker) => onDateRangeEvent(picker.startDate, picker.endDate)}>
                     <Button className="selected-date-range-btn" style={{width:'100%'}}>
                         <div className="pull-left"><Glyphicon glyph="calendar" /></div>
                         <div className="pull-right">
                             <span>
-                                {start}
+                                {label}
                             </span>
                             <span className="caret"></span>
                         </div>
                     </Button>
                 </DateRangePicker>
             </Col>
-            <Col xs={3} md={3}>
+            <Col xs={6} md={3}>
                 <FormGroup>
                     <FormControl type="text" placeholder="Filter" />
                 </FormGroup>

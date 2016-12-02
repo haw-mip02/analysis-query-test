@@ -4,7 +4,8 @@ import PieView from '../components/PieView'
 
 const mapStateToProps = (state) => {
     return {
-        clusters: state.clusters,
+        selectedCluster: state.selection.cluster,
+        selectedWord: state.selection.word,
     }
 }
 

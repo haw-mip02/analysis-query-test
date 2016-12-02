@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch'
-import { REST_URL, MAX_POPULAR_WORDS } from './constants'
+import { MAX_POPULAR_WORDS } from './constants'
 
 
 export const RECEIVE_CLUSTERS = 'RECEIVE_CLUSTERS'
