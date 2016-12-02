@@ -2,15 +2,17 @@
 let finalhandler = require('finalhandler')
 let http = require('http')
 let serveStatic = require('serve-static')
+let constants = require('./constants.js')
 
 let serve = serveStatic('build', {'index': ['index.html']})
 
 let server = http.createServer((req, res) => {
     if (req.url.indexOf('/analysis/') === 0) {
-        proxy(req, res, 'hqor.de', 16500)
+        proxy(req, res, constants.ANALYSIS_REST_HOST, constants.ANALYSIS_REST_PORT)
+        // proxy(req, res, 'hqor.de', 16500)
         // proxy(req, res, 'analysis-rest', 5000)
     } else if (req.url.indexOf('/tweets/') === 0) {
-        proxy(req, res, 'data-management', 3000)
+        proxy(req, res, constants.DATA_MANAGEMENT_HOST, constants.DATA_MANAGEMENT_PORT)
     } else {
         serve(req, res, finalhandler(req, res))
     }
