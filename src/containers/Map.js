@@ -7,8 +7,11 @@ import {
     handleMapCenterChanged,
     handleSearchRequest,
 } from '../actions'
-
-
+import {
+    IDLE_UPDATE,
+    REFRESH_INTERVAL,
+} from '../constants'
+ 
 const mapStateToProps = (state) => {
     return {
         center: state.map.center,
@@ -21,6 +24,10 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onMapLoad: (map) => {
             dispatch(handleMapLoaded(map))
+            if(!IDLE_UPDATE){
+                setTimeout(function(){dispatch(handleSearchRequest())},50)
+            }
+            setInterval(function(){dispatch(handleSearchRequest())}, REFRESH_INTERVAL)
         },
         onWordSelection: (cluster, word) => {
             dispatch(handleWordSelection(cluster, word))
@@ -32,7 +39,9 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(handleMapZoomChanged())
         },
         onIdle: () => {
-            dispatch(handleSearchRequest())
+            if(IDLE_UPDATE){
+                dispatch(handleSearchRequest())
+            }
         },
     }
 }
