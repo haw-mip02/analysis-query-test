@@ -39,7 +39,6 @@ const DetailPanelView = ({ selectedCluster, selectedWord, onWordSelection }) => 
         colorValue: selectedCluster.polarities[selectedWord],
         selected: true,
     });
-    console.log(data)
     return (
         <Panel header={`Selected Word: ${selectedWord}`} bsStyle="success">
             <BubbleChart

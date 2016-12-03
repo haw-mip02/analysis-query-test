@@ -1,5 +1,4 @@
 import fetch from 'isomorphic-fetch'
-import { MAX_POPULAR_WORDS } from './constants'
 
 
 export const RECEIVE_CLUSTERS = 'RECEIVE_CLUSTERS'
@@ -62,8 +61,8 @@ export function handleSearchRequest() {
 				    let center = cluster.center;
 				    cluster.center = { lat: center[1], lng: center[0] };
 				    let sortable = Object.keys(cluster.words).map(key => { return [key, cluster.words[key]] });
-				    sortable.sort((a, b) => { return a[1] - b[1] });
-				    cluster.mostPopular = sortable.slice(Math.max(sortable.length - MAX_POPULAR_WORDS, 0))
+				    sortable.sort((a, b) => { return b[1] - a[1] });
+				    cluster.mostPopular = sortable[0]
 				});
         		dispatch(receiveClusters(json.clusters))
         	}).catch(err => console.log(err))
