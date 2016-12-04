@@ -1,6 +1,6 @@
 import moment from 'moment'
-import { 
-	DATE_RANGE_EVENT, 
+import {
+	DATE_RANGE_EVENT,
 	RECEIVE_CLUSTERS,
 	MAP_LOADED,
 	MAP_ZOOM_CHANGED,
@@ -24,7 +24,7 @@ const initialState = {
 	        'This Month': [moment().startOf('month'), moment().endOf('month')],
 	        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
 	    },
-	    startDate: moment().subtract(29, 'days'),
+	    startDate: moment().subtract(1, 'days'),
 	    endDate: moment(),
 	},
     selection: {

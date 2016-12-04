@@ -9,8 +9,6 @@ let serve = serveStatic('build', {'index': ['index.html']})
 let server = http.createServer((req, res) => {
     if (req.url.indexOf('/analysis/') === 0) {
         proxy(req, res, constants.ANALYSIS_REST_HOST, constants.ANALYSIS_REST_PORT)
-        // proxy(req, res, 'hqor.de', 16500)
-        // proxy(req, res, 'analysis-rest', 5000)
     } else if (req.url.indexOf('/tweets/') === 0) {
         proxy(req, res, constants.DATA_MANAGEMENT_HOST, constants.DATA_MANAGEMENT_PORT)
     } else {
