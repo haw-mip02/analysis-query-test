@@ -6,7 +6,7 @@ import {
     OverlayView,
 } from 'react-google-maps';
 
-
+// eslint-disable-next-line
 const getColorBetween = (from, to, pos) => Array(3).fill(1).reduce((acc, _, i) => acc + ('00' + Math.floor((from >> (2 - i) * 8 & 0xff) + pos * ((to >> (2 - i) * 8 & 0xff) - (from >> (2 - i) * 8 & 0xff))).toString(16)).slice(-2), '#')
 
 const getPixelPositionOffset = (width, height) => {
@@ -22,7 +22,7 @@ const MapView = withGoogleMap(props => {
          mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
          getPixelPositionOffset={getPixelPositionOffset}>
             <div className="marker" onClick={() => props.onWordSelection(cluster, cluster.mostPopular[0])}>
-                <div className="circle" style={{'background-color': getColorBetween(0x3ea5f1, 0xf6778b, (cluster.polarities[cluster.mostPopular[0]] + 1) / 2)}}></div>
+                <div className="circle" style={{'backgroundColor': getColorBetween(0x3ea5f1, 0xf6778b, (cluster.polarities[cluster.mostPopular[0]] + 1) / 2)}}></div>
                 <div>{cluster.mostPopular[0]}</div>
             </div>
         </OverlayView>
