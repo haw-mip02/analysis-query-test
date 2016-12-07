@@ -8,7 +8,7 @@
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
     <!-- -->
-    <title>Analysis TestUI</title>
+    <title>Twitter Mood Map</title>
   </head>
   <body>
     <div id="root"></div>
