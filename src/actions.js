@@ -91,6 +91,7 @@ export function handleSearchRequest() {
         return poll(`/analysis/v1.0/search/${lat}/${lng}/${radius}/${t0}/${t1}`)
         	.then(json => {
         		console.log('Raw Cluster Data', json);
+				let tweetPromises = []
 				// raw cluster data needs transformation and shouldbe sorted and reduced
 				json.clusters.forEach(cluster => {
 				    let center = cluster.center;
@@ -98,7 +99,23 @@ export function handleSearchRequest() {
 				    let sortable = Object.keys(cluster.words).map(key => { return [key, cluster.words[key]] });
 				    sortable.sort((a, b) => { return b[1] - a[1] });
 				    cluster.mostPopular = sortable[0]
+
+					cluster.fetchedTweets = []
+					for (let tweetId in cluster.tweets) {
+						tweetPromises.push(fetch(`/tweets/${tweetId}`).then(res => res.json()).then(json => {
+							cluster.fetchedTweets.push({
+								rank: cluster.tweets[tweetId],
+								id: json.id_str,
+								user: json.user.name,
+								userUrl: json.user.screen_name,
+								text: json.text,
+								entities: json.entities
+							})
+						}))
+					}
+					cluster.fetchedTweets.sort((a, b) => b.rank - a.rank)
 				});
+				Promise.all(tweetPromises).then(() => dispatch(receiveClusters(json.clusters)))
         		dispatch(receiveClusters(json.clusters))
         	}).catch(err => console.log(err))
   	}

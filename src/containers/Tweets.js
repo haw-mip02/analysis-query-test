@@ -4,7 +4,7 @@ import TweetsView from '../components/TweetsView'
 
 const mapStateToProps = (state) => {
     return {
-        clusters: state.clusters,
+        selectedCluster: state.selection.cluster,
     }
 }
 

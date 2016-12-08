@@ -38,7 +38,7 @@ const SearchRow = ({ startDate, endDate, ranges, filterText, onDateRangeEvent, o
                     </Button>
                 </DateRangePicker>
             </Col>
-            <Col xs={6} md={3}>
+            <Col xs={6} md={4}>
                 <FormGroup>
                     <InputGroup>
                         <FormControl type="text" placeholder="Filter" value={filterText} onChange={onFilterChange} />
@@ -56,7 +56,7 @@ SearchRow.propTypes = {
     startDate: PropTypes.object.isRequired,
     endDate: PropTypes.object.isRequired,
     ranges: PropTypes.object.isRequired,
-    filterText: PropTypes.object.isRequired,
+    filterText: PropTypes.string.isRequired,
     onDateRangeEvent: PropTypes.func,
     onSearchClick: PropTypes.func,
     onFilterChange: PropTypes.func,

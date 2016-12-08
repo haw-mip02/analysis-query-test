@@ -25,7 +25,6 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(handleSearchRequest())
         },
         onFilterChange: (e) => {
-            console.log(e.target.value)
             dispatch(handleFilterChangedEvent(e.target.value))
         },
     }

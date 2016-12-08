@@ -24,7 +24,7 @@ const MapView = withGoogleMap(props => {
                         break
                     }
                 }
-                if (!foundInCluster) return
+                if (!foundInCluster) return null
             }
             return (
                 <OverlayView
