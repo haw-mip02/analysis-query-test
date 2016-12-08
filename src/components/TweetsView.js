@@ -46,18 +46,19 @@ function buildTweetMarkup(tweet) {
         let index = lastIndex
         lastIndex = sub.indices[1]
         switch (sub.type) {
-            case 'url':
+            case 'urls':
                 element = <a href={sub.url} target="_blank">{sub.text}</a>
-                break;
-            case 'hashtag':
+                break
+            case 'hashtags':
                 element = <a href={'https://twitter.com/hashtag/' + sub.text} target="_blank">#{sub.text}</a>
-                break;
-            case 'mention':
-                element = <a href={sub.url} target="_blank">@{sub.text}</a>
-                break;
+                break
+            case 'user_mentions':
+                element = <a href={'https://twitter.com/' + sub.url} target="_blank">@{sub.text}</a>
+                break
             case 'media':
                 element = <a href={sub.url} target="_blank">{sub.text}</a>
-                break;
+                break
+            default:
         }
         return (
             <span>
