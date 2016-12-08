@@ -50,7 +50,7 @@ function buildTweetMarkup(tweet) {
                 element = <a href={sub.url} target="_blank">{sub.text}</a>
                 break;
             case 'hashtag':
-                element = <a href={'https://twitter.com/hashtag/Hiring?src=' + sub.text} target="_blank">#{sub.text}</a>
+                element = <a href={'https://twitter.com/hashtag/' + sub.text} target="_blank">#{sub.text}</a>
                 break;
             case 'mention':
                 element = <a href={sub.url} target="_blank">@{sub.text}</a>
