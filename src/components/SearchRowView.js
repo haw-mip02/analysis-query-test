@@ -6,7 +6,8 @@ import {
     Button,
     Glyphicon,
     FormGroup,
-    FormControl
+    FormControl,
+    InputGroup,
 } from 'react-bootstrap'
 
 import DateRangePicker from 'react-bootstrap-daterangepicker'
@@ -15,7 +16,7 @@ import DateRangePicker from 'react-bootstrap-daterangepicker'
 import 'react-bootstrap-daterangepicker/css/daterangepicker.css';
 
 
-const SearchRow = ({ startDate, endDate, ranges, onDateRangeEvent, onSearchClick }) => {
+const SearchRow = ({ startDate, endDate, ranges, filterText, onDateRangeEvent, onSearchClick, onFilterChange }) => {
     var start = startDate.format('DD/MM/YYYY');
     var end = endDate.format('DD/MM/YYYY');
     var label = start + ' - ' + end;
@@ -39,7 +40,12 @@ const SearchRow = ({ startDate, endDate, ranges, onDateRangeEvent, onSearchClick
             </Col>
             <Col xs={6} md={3}>
                 <FormGroup>
-                    <FormControl type="text" placeholder="Filter" />
+                    <InputGroup>
+                        <FormControl type="text" placeholder="Filter" value={filterText} onChange={onFilterChange} />
+                        <InputGroup.Button>
+                            <Button onClick={onSearchClick}>Search</Button>
+                        </InputGroup.Button>
+                    </InputGroup>
                 </FormGroup>
             </Col>
         </Row>
@@ -50,8 +56,10 @@ SearchRow.propTypes = {
     startDate: PropTypes.object.isRequired,
     endDate: PropTypes.object.isRequired,
     ranges: PropTypes.object.isRequired,
+    filterText: PropTypes.object.isRequired,
     onDateRangeEvent: PropTypes.func,
-    onSearchClick: PropTypes.func
+    onSearchClick: PropTypes.func,
+    onFilterChange: PropTypes.func,
 }
 
 export default SearchRow

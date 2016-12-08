@@ -24,6 +24,7 @@ function proxy(req, res, host, port) {
         timeout: 5000
     }, resQ => {
         delete resQ.headers['content-length']
+        res.setHeader('Access-Control-Allow-Origin', '*')
         res.writeHead(resQ.statusCode, resQ.statusMessage, resQ.headers)
         resQ.pipe(res)
     })

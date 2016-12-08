@@ -15,18 +15,30 @@ const getPixelPositionOffset = (width, height) => {
 
 const MapView = withGoogleMap(props => {
     let overlays = (props.clusters.length > 0) ?
-        props.clusters.map((cluster, index) => (
-        <OverlayView
-         key={index}
-         position={cluster.center}
-         mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
-         getPixelPositionOffset={getPixelPositionOffset}>
-            <div className="marker" onClick={() => props.onWordSelection(cluster, cluster.mostPopular[0])}>
-                <div className="circle" style={{'background-color': getColorBetween(0x3ea5f1, 0xf6778b, (cluster.polarities[cluster.mostPopular[0]] + 1) / 2)}}></div>
-                <div>{cluster.mostPopular[0]}</div>
-            </div>
-        </OverlayView>
-    )) : null;
+        props.clusters.map((cluster, index) => {
+            if (props.filterText.length > 0) {
+                let foundInCluster = false
+                for (let word in cluster.words) {
+                    if (word.indexOf(props.filterText) !== -1) {
+                        foundInCluster = true
+                        break
+                    }
+                }
+                if (!foundInCluster) return
+            }
+            return (
+                <OverlayView
+                 key={index}
+                 position={cluster.center}
+                 mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+                 getPixelPositionOffset={getPixelPositionOffset}>
+                    <div className="marker" onClick={() => props.onWordSelection(cluster, cluster.mostPopular[0])}>
+                        <div className="circle" style={{'backgroundColor': getColorBetween(0xf6778b, 0x3ea5f1, (cluster.polarities[cluster.mostPopular[0]] + 1) / 2)}}></div>
+                        <div>{cluster.mostPopular[0]}</div>
+                    </div>
+                </OverlayView>
+            )
+        }) : null;
     return (
     <GoogleMap
      ref={props.onMapLoad}

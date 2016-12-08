@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-fetch'
 
+import { POLLING_INTERVAL } from './constants'
 
 export const RECEIVE_CLUSTERS = 'RECEIVE_CLUSTERS'
 export function receiveClusters(clusters) {
@@ -26,6 +27,14 @@ export function handleDateRangeEvent(startDate, endDate) {
 	}
 }
 
+export const FILTER_CHANGED = 'FILTER_CHANGED'
+export function handleFilterChangedEvent(text) {
+	return {
+		type: FILTER_CHANGED,
+		filterText: text
+	}
+}
+
 export const MAP_ZOOM_CHANGED = 'MAP_ZOOM_CHANGED'
 export function handleMapZoomChanged() {
 	return {
@@ -40,6 +49,33 @@ export function handleMapCenterChanged() {
 	}
 }
 
+
+let pollURL = ''
+let pollTimer
+function poll(url) {
+	pollURL = url
+	if (pollTimer) {
+		pollTimer = clearInterval(pollTimer)
+	}
+	async function tryFetch(res, url) {
+		let response = await fetch(url)
+		let json = await response.json()
+		if (json.status !== 'DONE') return
+		// A different url is now being polled. Discard current poll
+		if (pollURL !== url) return
+		pollTimer = clearInterval(pollTimer)
+		res(json)
+	}
+	return new Promise(res => {
+		pollTimer = setInterval(() => {
+			// A different url is now being polled. Discard current poll
+			if (!pollTimer || pollURL !== url) return
+			tryFetch(res, url)
+		}, POLLING_INTERVAL)
+		tryFetch(res, url)
+	})
+}
+
 export function handleSearchRequest() {
   	return (dispatch, getState) => {
   		const state = getState();
@@ -52,8 +88,7 @@ export function handleSearchRequest() {
         const search = state.search
         let t0 = search.startDate.utc().unix();
         let t1 = search.endDate.utc().unix();
-        return fetch(`/analysis/v1.0/search/${lat}/${lng}/${radius}/${t0}/${t1}`)
-        	.then(response => response.json())
+        return poll(`/analysis/v1.0/search/${lat}/${lng}/${radius}/${t0}/${t1}`)
         	.then(json => {
         		console.log('Raw Cluster Data', json);
 				// raw cluster data needs transformation and shouldbe sorted and reduced

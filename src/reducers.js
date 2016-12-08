@@ -6,6 +6,7 @@ import {
 	MAP_ZOOM_CHANGED,
 	MAP_CENTER_CHANGED,
     WORD_SELECTION,
+    FILTER_CHANGED,
 } from './actions'
 import { INITIAL_CENTER, INITIAL_ZOOM } from './constants'
 
@@ -26,6 +27,7 @@ const initialState = {
 	    },
 	    startDate: moment().subtract(1, 'days'),
 	    endDate: moment(),
+		filterText: ''
 	},
     selection: {
         cluster: undefined,
@@ -41,6 +43,12 @@ export default function reducers(state = initialState, action) {
         		search: Object.assign({}, state.search, {
         			startDate: action.startDate,
         			endDate: action.endDate,
+        		})
+      		})
+    	case FILTER_CHANGED:
+      		return Object.assign({}, state, {
+        		search: Object.assign({}, state.search, {
+        			filterText: action.filterText,
         		})
       		})
       	case MAP_ZOOM_CHANGED:

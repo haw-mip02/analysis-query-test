@@ -3,6 +3,7 @@ import SearchRowView from '../components/SearchRowView'
 import {
     handleDateRangeEvent,
     handleSearchRequest,
+    handleFilterChangedEvent,
 } from '../actions'
 
 
@@ -11,6 +12,7 @@ const mapStateToProps = (state) => {
         startDate: state.search.startDate,
         endDate: state.search.endDate,
         ranges: state.search.ranges,
+        filterText: state.search.filterText
     }
 }
 
@@ -21,6 +23,10 @@ const mapDispatchToProps = (dispatch) => {
         },
         onSearchClick: () => {
             dispatch(handleSearchRequest())
+        },
+        onFilterChange: (e) => {
+            console.log(e.target.value)
+            dispatch(handleFilterChangedEvent(e.target.value))
         },
     }
 }

@@ -14,6 +14,7 @@ const mapStateToProps = (state) => {
         center: state.map.center,
         zoom: state.map.zoom,
         clusters: state.clusters,
+        filterText: state.search.filterText
     }
 }
 
