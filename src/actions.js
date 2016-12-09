@@ -3,10 +3,11 @@ import fetch from 'isomorphic-fetch'
 import { POLLING_INTERVAL } from './constants'
 
 export const RECEIVE_CLUSTERS = 'RECEIVE_CLUSTERS'
-export function receiveClusters(clusters) {
+export function receiveClusters(clusters, popularWords) {
 	return {
 		type: RECEIVE_CLUSTERS,
 		clusters: clusters,
+        popularWords: popularWords,
 	}
 }
 
@@ -76,6 +77,15 @@ function poll(url) {
 	})
 }
 
+export function handlePieSelect(index){
+    return (dispatch, getState) => {
+        const state = getState();
+        let selWord = state.pie.popularWords[index][0]
+        let selCluster = state.pie.popularWords[index][2]
+        dispatch(handleWordSelection(selCluster, selWord))
+    }
+}
+
 export function handleSearchRequest() {
   	return (dispatch, getState) => {
   		const state = getState();
@@ -115,8 +125,16 @@ export function handleSearchRequest() {
 					}
 					cluster.fetchedTweets.sort((a, b) => b.rank - a.rank)
 				});
+            
+                //Prepare Piechart Data
+                let words = []
+                json.clusters.forEach(cluster => {
+                    words = words.concat(Object.keys(cluster.words).map(word => [word,cluster.words[word], cluster]).sort((a, b) => b[1] - a[1]).slice(0, 10))
+                })
+                words = words.sort((a, b) => b[1] - a[1]).slice(0, 10)
+            
 				Promise.all(tweetPromises).then(() => dispatch(receiveClusters(json.clusters)))
-        		dispatch(receiveClusters(json.clusters))
+        		dispatch(receiveClusters(json.clusters, words))
         	}).catch(err => console.log(err))
   	}
 }

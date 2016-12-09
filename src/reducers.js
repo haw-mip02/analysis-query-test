@@ -34,6 +34,9 @@ const initialState = {
         word: undefined,
     },
     clusters: [],
+    pie: {
+        popularWords: []
+    }
 }
 
 export default function reducers(state = initialState, action) {
@@ -72,6 +75,9 @@ export default function reducers(state = initialState, action) {
         case RECEIVE_CLUSTERS:
         	return Object.assign({}, state, {
         		clusters: action.clusters,
+                pie: Object.assign({}, state.pie, {
+                    popularWords: action.popularWords,
+                })
         	})
         case MAP_LOADED:
         	return Object.assign({}, state, { map: Object.assign({}, state.map, {

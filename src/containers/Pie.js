@@ -1,16 +1,20 @@
 import { connect } from 'react-redux'
 import PieView from '../components/PieView'
-
+import { handlePieSelect } from '../actions'
 
 const mapStateToProps = (state) => {
     return {
-        selectedCluster: state.selection.cluster,
-        selectedWord: state.selection.word,
+        clusters: state.clusters,
+        popularWords: state.pie.popularWords,
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return {}
+    return {
+        onPieSelection: (index) => {
+            dispatch(handlePieSelect(index))
+        },
+    }
 }
 
 const Pie = connect(
