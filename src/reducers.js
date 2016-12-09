@@ -36,8 +36,8 @@ const initialState = {
     },
     clusters: [],
     pie: {
-        popularWords: []
-    }
+        popularWords: [],
+    },
     searchTimer: undefined,
 }
 
