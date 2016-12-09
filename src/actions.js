@@ -133,7 +133,7 @@ export function handleSearchRequest() {
                 })
                 words = words.sort((a, b) => b[1] - a[1]).slice(0, 10)
             
-				Promise.all(tweetPromises).then(() => dispatch(receiveClusters(json.clusters)))
+				Promise.all(tweetPromises).then(() => dispatch(receiveClusters(json.clusters, words)))
         		dispatch(receiveClusters(json.clusters, words))
         	}).catch(err => console.log(err))
   	}
