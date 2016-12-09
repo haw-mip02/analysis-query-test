@@ -77,6 +77,27 @@ function poll(url) {
 	})
 }
 
+export const TIMER_CHANGED = 'TIMER_CHANGED'
+export function handleTimerChanged(searchTimer) {
+	return {
+		type: TIMER_CHANGED,
+        searchTimer: searchTimer
+	}
+}
+export function handleTimer(){
+    return (dispatch, getState) => {
+        const timer = getState().searchTimer;
+        if(timer === undefined){
+            document.getElementById('ToggleButton').innerHTML = "On"
+            dispatch(handleTimerChanged(setInterval(function(){dispatch(handleSearchRequest()); console.log("start searching")}, 60000)))
+        }else{
+            document.getElementById('ToggleButton').innerHTML = "Off"
+            clearInterval(timer)
+            dispatch(handleTimerChanged(undefined)) 
+        }
+    }
+}
+
 export function handlePieSelect(index){
     return (dispatch, getState) => {
         const state = getState();

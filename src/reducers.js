@@ -7,6 +7,7 @@ import {
 	MAP_CENTER_CHANGED,
     WORD_SELECTION,
     FILTER_CHANGED,
+    TIMER_CHANGED,
 } from './actions'
 import { INITIAL_CENTER, INITIAL_ZOOM } from './constants'
 
@@ -37,6 +38,7 @@ const initialState = {
     pie: {
         popularWords: []
     }
+    searchTimer: undefined,
 }
 
 export default function reducers(state = initialState, action) {
@@ -88,6 +90,10 @@ export default function reducers(state = initialState, action) {
                 cluster: action.cluster,
                 word: action.word,
             }) })
+        case TIMER_CHANGED:
+        	return Object.assign({}, state, {
+        		searchTimer: action.searchTimer,
+        	})
     	default:
     	  	return state
   	}

@@ -16,7 +16,7 @@ import DateRangePicker from 'react-bootstrap-daterangepicker'
 import 'react-bootstrap-daterangepicker/css/daterangepicker.css';
 
 
-const SearchRow = ({ startDate, endDate, ranges, filterText, onDateRangeEvent, onSearchClick, onFilterChange }) => {
+const SearchRow = ({ startDate, endDate, ranges, filterText, onDateRangeEvent, onSearchClick, onFilterChange, onSearchClick }) => {
     var start = startDate.format('DD/MM/YYYY');
     var end = endDate.format('DD/MM/YYYY');
     var label = start + ' - ' + end;
@@ -48,6 +48,13 @@ const SearchRow = ({ startDate, endDate, ranges, filterText, onDateRangeEvent, o
                     </InputGroup>
                 </FormGroup>
             </Col>
+            <Col xs={6} md={4}>
+                <FormGroup>
+                    <div>Auto Search 
+                        <Button id='ToggleButton' onClick={onTimerClick} >Off</Button>
+                    </div>
+                </FormGroup>
+            </Col>
         </Row>
     )
 }
@@ -60,6 +67,7 @@ SearchRow.propTypes = {
     onDateRangeEvent: PropTypes.func,
     onSearchClick: PropTypes.func,
     onFilterChange: PropTypes.func,
+    onTimerClick: PropTypes.func,
 }
 
 export default SearchRow

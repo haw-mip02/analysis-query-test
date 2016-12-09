@@ -4,6 +4,7 @@ import {
     handleDateRangeEvent,
     handleSearchRequest,
     handleFilterChangedEvent,
+    handleTimer,
 } from '../actions'
 
 
@@ -26,6 +27,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         onFilterChange: (e) => {
             dispatch(handleFilterChangedEvent(e.target.value))
+        },
+        onTimerClick: () => {
+            dispatch(handleTimer())
         },
     }
 }
