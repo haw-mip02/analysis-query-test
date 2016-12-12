@@ -88,10 +88,12 @@ export function handleTimer(){
     return (dispatch, getState) => {
         const timer = getState().searchTimer;
         if(timer === undefined){
-            document.getElementById('ToggleButton').innerHTML = "On"
-            dispatch(handleTimerChanged(setInterval(function(){dispatch(handleSearchRequest()); console.log("start searching")}, 60000)))
+            document.getElementById('ToggleField').innerHTML = "Auto Search: On"
+            document.getElementById('ToggleButton').innerHTML = "Turn Off"
+            dispatch(handleTimerChanged(setInterval(function(){console.log("Request new Data");dispatch(handleSearchRequest())}, 60000)))
         }else{
-            document.getElementById('ToggleButton').innerHTML = "Off"
+            document.getElementById('ToggleField').innerHTML = "Auto Search: Off"
+            document.getElementById('ToggleButton').innerHTML = "Turn On"
             clearInterval(timer)
             dispatch(handleTimerChanged(undefined)) 
         }

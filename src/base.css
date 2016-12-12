@@ -27,6 +27,12 @@ body {
     align-items: center;
 }
 
+.toggle {
+    padding: 5px 7px;
+    font-size: 25;
+    font-weight: normal;
+}
+
 .tweet-writer {
     font-weight: bold;
 }

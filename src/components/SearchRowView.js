@@ -8,6 +8,7 @@ import {
     FormGroup,
     FormControl,
     InputGroup,
+    ControlLabel,
 } from 'react-bootstrap'
 
 import DateRangePicker from 'react-bootstrap-daterangepicker'
@@ -50,9 +51,8 @@ const SearchRow = ({ startDate, endDate, ranges, filterText, onDateRangeEvent, o
             </Col>
             <Col xs={6} md={4}>
                 <FormGroup>
-                    <div>Auto Search 
-                        <Button id='ToggleButton' onClick={onTimerClick} >Off</Button>
-                    </div>
+                    <ControlLabel className='toggle' id='ToggleField'> Auto Search </ControlLabel>
+                    <Button id='ToggleButton' onClick={onTimerClick} >Off</Button>
                 </FormGroup>
             </Col>
         </Row>

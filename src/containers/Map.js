@@ -6,6 +6,7 @@ import {
     handleMapZoomChanged,
     handleMapCenterChanged,
     handleSearchRequest,
+    handleTimer,
 } from '../actions'
 
 
@@ -22,6 +23,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onMapLoad: (map) => {
             dispatch(handleMapLoaded(map))
+            dispatch(handleTimer())
         },
         onWordSelection: (cluster, word) => {
             dispatch(handleWordSelection(cluster, word))
