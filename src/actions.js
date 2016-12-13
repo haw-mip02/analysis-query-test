@@ -95,7 +95,7 @@ export function handleTimer(){
             document.getElementById('ToggleField').innerHTML = "Auto Search: Off"
             document.getElementById('ToggleButton').innerHTML = "Turn On"
             clearInterval(timer)
-            dispatch(handleTimerChanged(undefined)) 
+            dispatch(handleTimerChanged(undefined))
         }
     }
 }
@@ -121,7 +121,7 @@ export function handleSearchRequest() {
         const search = state.search
         let t0 = search.startDate.utc().unix();
         let t1 = search.endDate.utc().unix();
-        return poll(`/analysis/v1.0/search/${lat}/${lng}/${radius}/${t0}/${t1}`)
+        return poll(`http://mod-thiel1.ful.informatik.haw-hamburg.de/analysis/v1.0/search/${lat}/${lng}/${radius}/${t0}/${t1}/10`)
         	.then(json => {
         		console.log('Raw Cluster Data', json);
 				let tweetPromises = []
@@ -135,7 +135,7 @@ export function handleSearchRequest() {
 
 					cluster.fetchedTweets = []
 					for (let tweetId in cluster.tweets) {
-						tweetPromises.push(fetch(`/tweets/${tweetId}`).then(res => res.json()).then(json => {
+						tweetPromises.push(fetch(`http://mod-thiel1.ful.informatik.haw-hamburg.de/tweets/${tweetId}`).then(res => res.json()).then(json => {
 							cluster.fetchedTweets.push({
 								rank: cluster.tweets[tweetId],
 								id: json.id_str,
@@ -148,14 +148,14 @@ export function handleSearchRequest() {
 					}
 					cluster.fetchedTweets.sort((a, b) => b.rank - a.rank)
 				});
-            
+
                 //Prepare Piechart Data
                 let words = []
                 json.clusters.forEach(cluster => {
                     words = words.concat(Object.keys(cluster.words).map(word => [word,cluster.words[word], cluster]).sort((a, b) => b[1] - a[1]).slice(0, 10))
                 })
                 words = words.sort((a, b) => b[1] - a[1]).slice(0, 10)
-            
+
 				Promise.all(tweetPromises).then(() => dispatch(receiveClusters(json.clusters, words)))
         		dispatch(receiveClusters(json.clusters, words))
         	}).catch(err => console.log(err))
