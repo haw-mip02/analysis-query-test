@@ -121,7 +121,7 @@ export function handleSearchRequest() {
         const search = state.search
         let t0 = search.startDate.utc().unix();
         let t1 = search.endDate.utc().unix();
-        return poll(`http://mod-thiel1.ful.informatik.haw-hamburg.de/analysis/v1.0/search/${lat}/${lng}/${radius}/${t0}/${t1}/10`)
+        return poll(`/analysis/v1.0/search/${lat}/${lng}/${radius}/${t0}/${t1}/10`)
         	.then(json => {
         		console.log('Raw Cluster Data', json);
 				let tweetPromises = []
@@ -135,7 +135,7 @@ export function handleSearchRequest() {
 
 					cluster.fetchedTweets = []
 					for (let tweetId in cluster.tweets) {
-						tweetPromises.push(fetch(`http://mod-thiel1.ful.informatik.haw-hamburg.de/tweets/${tweetId}`).then(res => res.json()).then(json => {
+						tweetPromises.push(fetch(`/tweets/${tweetId}`).then(res => res.json()).then(json => {
 							cluster.fetchedTweets.push({
 								rank: cluster.tweets[tweetId],
 								id: json.id_str,
