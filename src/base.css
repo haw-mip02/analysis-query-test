@@ -33,6 +33,12 @@ body {
     font-weight: normal;
 }
 
+.slider {
+    padding: 10px 15px;
+    font-size: 25;
+    font-weight: normal;
+}
+
 .tweet-writer {
     font-weight: bold;
 }

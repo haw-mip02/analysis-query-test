@@ -50,6 +50,13 @@ export function handleMapCenterChanged() {
 	}
 }
 
+export const SLIDER_CHANGED = 'SLIDER_CHANGED'
+export function handleSliderChanged(nrCluster) {
+	return {
+		type: SLIDER_CHANGED,
+        nrCluster: nrCluster
+	}
+}
 
 let pollURL = ''
 let pollTimer
@@ -121,7 +128,7 @@ export function handleSearchRequest() {
         const search = state.search
         let t0 = search.startDate.utc().unix();
         let t1 = search.endDate.utc().unix();
-        return poll(`/analysis/v1.0/search/${lat}/${lng}/${radius}/${t0}/${t1}/10`)
+        return poll(`/analysis/v1.0/search/${lat}/${lng}/${radius}/${t0}/${t1}/${state.nrCluster}`)
         	.then(json => {
         		console.log('Raw Cluster Data', json);
 				let tweetPromises = []

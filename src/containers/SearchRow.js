@@ -5,6 +5,7 @@ import {
     handleSearchRequest,
     handleFilterChangedEvent,
     handleTimer,
+    handleSliderChanged,
 } from '../actions'
 
 
@@ -30,6 +31,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         onTimerClick: () => {
             dispatch(handleTimer())
+        },
+        onSliderStop:(nrCluster) => {
+            dispatch(handleSliderChanged(nrCluster))
         },
     }
 }

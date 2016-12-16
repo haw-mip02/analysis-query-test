@@ -8,6 +8,7 @@ import {
     WORD_SELECTION,
     FILTER_CHANGED,
     TIMER_CHANGED,
+    SLIDER_CHANGED,
 } from './actions'
 import { INITIAL_CENTER, INITIAL_ZOOM } from './constants'
 
@@ -39,6 +40,7 @@ const initialState = {
         popularWords: [],
     },
     searchTimer: undefined,
+    nrCluster: 10,
 }
 
 export default function reducers(state = initialState, action) {
@@ -93,6 +95,10 @@ export default function reducers(state = initialState, action) {
         case TIMER_CHANGED:
         	return Object.assign({}, state, {
         		searchTimer: action.searchTimer,
+        	})
+        case SLIDER_CHANGED:
+            return Object.assign({}, state, {
+        		nrCluster: action.nrCluster,
         	})
     	default:
     	  	return state

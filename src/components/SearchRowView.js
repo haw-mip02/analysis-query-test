@@ -12,12 +12,12 @@ import {
 } from 'react-bootstrap'
 
 import DateRangePicker from 'react-bootstrap-daterangepicker'
-
+import ReactBootstrapSlider from 'react-bootstrap-slider';
 // CSS
 import 'react-bootstrap-daterangepicker/css/daterangepicker.css';
+import 'bootstrap-slider/dist/css/bootstrap-slider.min.css';
 
-
-const SearchRow = ({ startDate, endDate, ranges, filterText, onDateRangeEvent, onSearchClick, onFilterChange, onTimerClick }) => {
+const SearchRow = ({ startDate, endDate, ranges, filterText, onDateRangeEvent, onSearchClick, onFilterChange, onTimerClick, onSliderStop }) => {
     var start = startDate.format('DD/MM/YYYY');
     var end = endDate.format('DD/MM/YYYY');
     var label = start + ' - ' + end;
@@ -55,6 +55,15 @@ const SearchRow = ({ startDate, endDate, ranges, filterText, onDateRangeEvent, o
                     <Button id='ToggleButton' onClick={onTimerClick} >Off</Button>
                 </FormGroup>
             </Col>
+            <Col xs={6} md={5}>
+                <ControlLabel className='slider'> Number of Clusters: </ControlLabel>
+                <ReactBootstrapSlider
+                    value={10}
+                    slideStop={function(i){onSliderStop(i.target.value)}}
+                    step={1}
+                    max={100}
+                    min={5}/>
+            </Col>
         </Row>
     )
 }
@@ -68,6 +77,7 @@ SearchRow.propTypes = {
     onSearchClick: PropTypes.func,
     onFilterChange: PropTypes.func,
     onTimerClick: PropTypes.func,
+    onSliderStop: PropTypes.func,
 }
 
 export default SearchRow
