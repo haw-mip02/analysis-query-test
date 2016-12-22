@@ -1,4 +1,4 @@
-exports.INITIAL_CENTER = { lat: 40.785075, lng: -73.962021 };
+exports.INITIAL_CENTER = { lat: ${INITIAL_CENTER_LAT}, lng: ${INITIAL_CENTER_LNG} };
 exports.INITIAL_ZOOM = 8;
 exports.POLLING_INTERVAL = 100;
 exports.ANALYSIS_REST_HOST = "${REST_PORT_5000_TCP_HOST}".replace(/['"]+/g, '');
