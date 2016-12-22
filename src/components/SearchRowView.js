@@ -61,7 +61,7 @@ const SearchRow = ({ startDate, endDate, ranges, filterText, onDateRangeEvent, o
                     value={10}
                     slideStop={function(i){onSliderStop(i.target.value)}}
                     step={1}
-                    max={100}
+                    max={30}
                     min={5}/>
             </Col>
         </Row>
