@@ -59,7 +59,7 @@ const SearchRow = ({ startDate, endDate, ranges, filterText, onDateRangeEvent, o
                 <ControlLabel className='slider'> Number of Clusters: </ControlLabel>
                 <ReactBootstrapSlider
                     value={10}
-                    slideStop={function(i){onSliderStop(i.target.value)}}
+                    slideStop={function(i){onSliderStop(i.target.value); onSearchClick()}}
                     step={1}
                     max={30}
                     min={5}/>
